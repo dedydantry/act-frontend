@@ -43,7 +43,7 @@ export default function App() {
                   <div className="py-4">
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/sigin" element={<Sigin />} />
+                    <Route path="/signin" element={<Sigin />} />
                   </Routes>
                   </div>
                 </div>
