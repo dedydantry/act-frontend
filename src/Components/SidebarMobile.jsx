@@ -9,7 +9,7 @@ function SidebarMobile({setSidebarOpen, navigation}) {
   return (
       <>
       <Transition.Root show={toggleSidebar} as={Fragment}>
-          <Dialog as="div" className="fixed inset-0 z-40 flex md:hidden" onClose={setToggleSidebar}>
+          <Dialog as="div" className="fixed inset-0 z-40 flex md:hidden" onClose={()=>setToggleSidebar(false)}>
             <Transition.Child
                 as={Fragment}
                 enter="transition-opacity ease-linear duration-300"

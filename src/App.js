@@ -28,7 +28,7 @@ export default function App() {
   return (
     <MainState>
       <div>
-        <SidebarMobile navigation={navigation}/>
+        {/* <SidebarMobile navigation={navigation}/> */}
 
         <SidebarDekstop navigation={navigation}/>
 
