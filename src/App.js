@@ -9,7 +9,7 @@ import {
   UsersIcon,
 } from '@heroicons/react/outline'
 import Home from './Pages/Home'
-import Sign from './Pages/Sign'
+import Sigin from './Pages/Sigin'
 import Header from './Components/Header'
 import SidebarDekstop from './Components/SidebarDekstop'
 import SidebarMobile from './Components/SidebarMobile'
@@ -36,14 +36,14 @@ export default function App() {
           <Header/>
             <main>
               <div className="py-6">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                <div className="hidden max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
                 </div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                   <div className="py-4">
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/sign" element={<Sign />} />
+                    <Route path="/sigin" element={<Sigin />} />
                   </Routes>
                   </div>
                 </div>
