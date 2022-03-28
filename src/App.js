@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/outline'
 import Home from './Pages/Home'
 import Sigin from './Pages/Sigin'
+import Signup from './Pages/Signup'
 import Header from './Components/Header'
 import SidebarDekstop from './Components/SidebarDekstop'
 import SidebarMobile from './Components/SidebarMobile'
@@ -44,6 +45,7 @@ export default function App() {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/signin" element={<Sigin />} />
+                    <Route path="/signup" element={<Signup />} />
                   </Routes>
                   </div>
                 </div>
