@@ -23,9 +23,9 @@ function Sign() {
   };
 
   const submitLogin = () => {
-    const login = logInWithEmailAndPassword(userEmail, password).then(() => {
-      console.log(login, 'login')
-      if(login){
+    logInWithEmailAndPassword(userEmail, password).then((result) => {
+      console.log(result, 'result')
+      if(result){
         const user = getUserByEmail();
         if (!user.client) {
           return navigate("/client");
