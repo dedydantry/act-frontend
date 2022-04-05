@@ -1,5 +1,6 @@
-import React from 'react'
-function Button({icon}) {
+import React from "react";
+
+function Button({ icon }) {
   return (
     <button
       type="button"
@@ -8,7 +9,7 @@ function Button({icon}) {
       <span className="sr-only">View notifications</span>
       {icon}
     </button>
-  )
+  );
 }
 
-export default Button
+export default Button;

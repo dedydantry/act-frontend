@@ -1,13 +1,49 @@
-import {useContext, useEffect} from 'react'
-import MainContext from '../Context/MainContext'
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { auth, logInWithEmailAndPassword } from "../Config/Firebase";
+import MainContext from "../Context/MainContext";
+import AppAuthButton from "../Components/Elements/AppAuthButton";
+import useAuthentication from "../Api/useAuthentication";
 
 function Sign() {
-  const {toggleSidebar, setToggleSidebar } = useContext(MainContext)
+  const user = useAuthentication();
 
-  useEffect( () => {
-    setToggleSidebar(false)
-    console.log(toggleSidebar, 'toggleSidebar')
-  }, [])
+  const { toggleSidebar, setToggleSidebar } = useContext(MainContext);
+
+  const navigate = useNavigate();
+
+  const [userEmail, setUserEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [id, setId] = useState("");
+  // const [client, setClient] = useState("");
+
+  let email = userEmail;
+
+  const getUserByEmail = () => {
+    // const authEmail = auth.currentUser.email;
+    const result = axios.get(`http://localhost:8080/api/users/email`, {
+      email: auth.currentUser.email,
+    });
+    console.log(result.data);
+    return result.data;
+  };
+
+  const submitLogin = () => {
+    const login = logInWithEmailAndPassword(email, password).then(() => {
+      const user = getUserByEmail();
+      if (!user.client) {
+        return navigate("/client");
+      }
+      return navigate("/profile");
+    });
+  };
+
+  useEffect(() => {
+    setToggleSidebar(false);
+    console.log(toggleSidebar, "toggleSidebar");
+  }, []);
 
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -17,25 +53,26 @@ function Sign() {
           src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
           alt="Workflow"
         />
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-            start your 14-day free trial
-          </a>
-        </p>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Sign in to your account
+        </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" action="#" method="POST">
+          <div className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <div className="mt-1">
                 <input
                   id="email"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                   name="email"
                   type="email"
                   autoComplete="email"
@@ -46,12 +83,17 @@ function Sign() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
                 <input
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   name="password"
                   type="password"
                   autoComplete="current-password"
@@ -69,31 +111,38 @@ function Sign() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a
+                  href="#"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
                   Forgot your password?
                 </a>
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Sign in
-              </button>
+              <AppAuthButton
+                size="sm"
+                color="indigo"
+                children="Sign In"
+                fullWidth={true}
+                onClick={() => submitLogin()}
+              />
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Sign
+export default Sign;
