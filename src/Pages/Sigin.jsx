@@ -5,24 +5,16 @@ import axios from "axios";
 import { auth, logInWithEmailAndPassword } from "../Config/Firebase";
 import MainContext from "../Context/MainContext";
 import AppAuthButton from "../Components/Elements/AppAuthButton";
-import useAuthentication from "../Api/useAuthentication";
 
 function Sign() {
-  const user = useAuthentication();
 
-  const { toggleSidebar, setToggleSidebar } = useContext(MainContext);
+  const { setToggleSidebar } = useContext(MainContext);
 
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [id, setId] = useState("");
-  // const [client, setClient] = useState("");
-
-  let email = userEmail;
-
   const getUserByEmail = () => {
-    // const authEmail = auth.currentUser.email;
     const result = axios.get(`http://localhost:8080/api/users/email`, {
       email: auth.currentUser.email,
     });
@@ -31,18 +23,21 @@ function Sign() {
   };
 
   const submitLogin = () => {
-    const login = logInWithEmailAndPassword(email, password).then(() => {
-      const user = getUserByEmail();
-      if (!user.client) {
-        return navigate("/client");
+    const login = logInWithEmailAndPassword(userEmail, password).then(() => {
+      console.log(login, 'login')
+      if(login){
+        const user = getUserByEmail();
+        if (!user.client) {
+          return navigate("/client");
+        }
+        return navigate("/profile");
       }
-      return navigate("/profile");
+      console.log('Invalid password')
     });
   };
 
   useEffect(() => {
     setToggleSidebar(false);
-    console.log(toggleSidebar, "toggleSidebar");
   }, []);
 
   return (
@@ -120,10 +115,7 @@ function Sign() {
               </div>
 
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
+                <a  href="javascript:;"  className="font-medium text-indigo-600 hover:text-indigo-500" >
                   Forgot your password?
                 </a>
               </div>
