@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { auth, logout, sendPasswordReset } from "../Config/Firebase";
 
 import AppAuthButton from "../Components/Elements/AppAuthButton";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+  var store = require("store");
+
   let user = auth.currentUser;
 
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ function ProfilePage() {
   };
 
   const logoutUser = () => {
+    store.clearAll();
     logout();
     navigate("/signin");
   };

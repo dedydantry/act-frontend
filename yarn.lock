@@ -11200,6 +11200,7 @@ __metadata:
     react-firebase-hooks: ^5.0.3
     react-router-dom: 6
     react-scripts: 5.0.0
+    store: ^2.0.12
     tailwindcss: 3.0.18
     web-vitals: ^2.1.4
   languageName: unknown
@@ -11755,6 +11756,13 @@ __metadata:
   version: 1.5.0
   resolution: "statuses@npm:1.5.0"
   checksum: c469b9519de16a4bb19600205cffb39ee471a5f17b82589757ca7bd40a8d92ebb6ed9f98b5a540c5d302ccbc78f15dc03cc0280dd6e00df1335568a5d5758a5c
+  languageName: node
+  linkType: hard
+
+"store@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "store@npm:2.0.12"
+  checksum: 4e0fe69f71dc3c99af1b87e87dcb0c81fc979bd38abbcdf66d5705f1c44e6fd5e043056288efd695926c75419adc356873e6792d9b024085a8db51dbdda899ea
   languageName: node
   linkType: hard
 

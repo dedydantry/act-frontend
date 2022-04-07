@@ -20,6 +20,8 @@ import useAuthentication from "./Api/useAuthentication";
 import ContactPage from "./Pages/ContactPage";
 import ClientPage from "./Pages/ClientPage";
 import ProfilePage from "./Pages/ProfilePage";
+import ContactAddPage from "./Pages/ContactAddPage";
+import ContactDetailPage from "./Pages/ContactDetailPage";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon, current: true },
@@ -58,9 +60,17 @@ export default function App() {
                   )}
                   {user && (
                     <Routes>
+                      <Route index element={<Home />} />
                       <Route path="/client" element={<ClientPage />} />
-                      <Route path="/" element={<Home />} />
                       <Route path="/contacts" element={<ContactPage />} />
+                      <Route
+                        path="/contacts/:id"
+                        element={<ContactDetailPage />}
+                      />
+                      <Route
+                        path="/contacts/add"
+                        element={<ContactAddPage />}
+                      />
                       <Route path="/profile" element={<ProfilePage />} />
                     </Routes>
                   )}

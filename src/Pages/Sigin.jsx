@@ -7,32 +7,33 @@ import MainContext from "../Context/MainContext";
 import AppAuthButton from "../Components/Elements/AppAuthButton";
 
 function Sign() {
-
+  var store = require("store");
   const { setToggleSidebar } = useContext(MainContext);
-
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
-  const getUserByEmail = () => {
-    const result = axios.get(`http://localhost:8080/api/users/email`, {
-      email: auth.currentUser.email,
-    });
+
+  const getClientStatus = async () => {
+    const result = await axios.get(
+      `http://localhost:8080/api/users/email?email=${auth.currentUser.email}`
+    );
     console.log(result.data);
     return result.data;
   };
 
   const submitLogin = () => {
-    logInWithEmailAndPassword(userEmail, password).then((result) => {
-      console.log(result, 'result')
-      if(result){
-        const user = getUserByEmail();
-        if (!user.client) {
+    logInWithEmailAndPassword(userEmail, password).then(async (result) => {
+      if (result) {
+        const user = await getClientStatus();
+        if (!user.message.client) {
           return navigate("/client");
         }
-        return navigate("/profile");
+        store.set("clientId", user.message.client.id);
+        console.log(user);
+        return (window.location.href = "/profile");
       }
-      console.log('Invalid password')
+      console.log("Invalid password");
     });
   };
 
@@ -115,7 +116,10 @@ function Sign() {
               </div>
 
               <div className="text-sm">
-                <a  href="javascript:;"  className="font-medium text-indigo-600 hover:text-indigo-500" >
+                <a
+                  href="javascript:;"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
                   Forgot your password?
                 </a>
               </div>
